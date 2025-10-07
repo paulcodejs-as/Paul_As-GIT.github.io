@@ -1,12 +1,15 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-theme="auto">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>Git — Control de Versiones (Guía práctica y comandos esenciales)</title>
-  <meta name="description" content="Guía clara y práctica de Git: conceptos, workflow, escenarios comunes, comandos avanzados, .gitignore y Conventional Commits. Ideal para empezar y para repasar." />
-  <meta name="keywords" content="Git, control de versiones, branches, commits, merge, rebase, cherry-pick, reflog, gitignore, conventional commits" />
+  <meta name="description"
+    content="Guía clara y práctica de Git: conceptos, workflow, escenarios comunes, comandos avanzados, .gitignore y Conventional Commits. Ideal para empezar y para repasar." />
+  <meta name="keywords"
+    content="Git, control de versiones, branches, commits, merge, rebase, cherry-pick, reflog, gitignore, conventional commits" />
   <meta name="robots" content="index, follow" />
 
   <meta name="author" content="Paul AS" />
@@ -20,53 +23,113 @@
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="PAUL_AS / GIT" />
   <meta property="og:title" content="Git — Control de Versiones: guía completa y comandos" />
-  <meta property="og:description" content="Todo lo esencial de Git con ejemplos de terminal: flujo de trabajo, solución de conflictos, stash, rebase, cherry-pick y más." />
+  <meta property="og:description"
+    content="Todo lo esencial de Git con ejemplos de terminal: flujo de trabajo, solución de conflictos, stash, rebase, cherry-pick y más." />
   <meta property="og:image:alt" content="Portada guía de Git con terminal y ramas" />
   <meta property="og:locale" content="es_PE" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Git — Control de Versiones: guía completa y comandos" />
-  <meta name="twitter:description" content="Conceptos, workflow, escenarios y comandos avanzados de Git con ejemplos." />
+  <meta name="twitter:description"
+    content="Conceptos, workflow, escenarios y comandos avanzados de Git con ejemplos." />
 
-  <link rel="icon" type="image/svg+xml" href="img/logoGit.png" />
-  <link rel="alternate icon" type="image/png" sizes="32x32" href="img/logoGit.png" />
+  <link rel="icon" type="image/png" href="img/logoGit.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="img/logoGit.png" />
-  <meta name="apple-mobile-web-app-title" content="PAUL_AS / GIT" />
-
   <link rel="manifest" href="/site.webmanifest" />
   <meta name="msapplication-TileColor" content="#0a0a0a" />
-  <link rel="stylesheet" href="css/index.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@400;600;700&display=swap"
+    rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/index.css">
 </head>
 
 <body>
+  <a class="skip-link" href="#introduccion">Saltar al contenido</a>
+  <!-- NAV -->
+  <nav aria-label="Principal">
+    <div class="container nav-inner">
+      <a href="#introduccion" class="brand" aria-label="Ir al inicio">
+        <span class="brand-badge" aria-hidden="true"><i class="fas fa-code"></i>
+        </span>
+        <span>PAUL_AS / GIT</span>
+      </a>
 
-  <nav>
-    <div class="container">
-      <a href="#introduccion" ><span style="color: white !important;">PAUL_AS / GIT</span></a>
-      <div>
-        <a href="#conceptos">CONCEPTOS</a>
-        <a href="#workflow">FLUJO DE TRABAJO</a>
-        <a href="#scenarios">ESCENARIOS</a>
-        <a href="#avanzado">AVANZADO</a>
+      <div class="nav-links" role="navigation" aria-label="Secciones">
+        <a href="#conceptos">Conceptos</a>
+        <a href="#workflow">Flujo de trabajo</a>
+        <a href="#scenarios">Escenarios</a>
+        <a href="#avanzado">Avanzado</a>
+        <a href="practica.html">Practicar</a>
+      </div>
+
+      <div class="nav-actions">
+        <button id="themeBtn" class="icon-btn" type="button" aria-pressed="false" aria-label="Cambiar tema">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+          <span id="themeLabel">Tema</span>
+        </button>
+        <button id="menuBtn" class="icon-btn hamburger" type="button" aria-label="Abrir menú" aria-haspopup="true"
+          aria-expanded="false" aria-controls="mobilePanel">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+          <span class="sr-only">Menú</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile overlay -->
+    <div id="mobilePanel" class="mobile-panel" hidden>
+      <div class="mobile-card" role="dialog" aria-label="Menú de navegación">
+        <div class="mobile-row">
+          <div class="brand" style="font-size: .95rem;">
+              <span class="brand-badge" aria-hidden="true"><i class="fas fa-code"></i>
+        </span>
+            <span>PAUL_AS / GIT</span>
+          </div>
+          <button id="closeMenu" class="icon-btn" type="button" aria-label="Cerrar menú">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+        <nav class="mobile-links" aria-label="Secciones móviles">
+          <a href="#conceptos">Conceptos</a>
+          <a href="#workflow">Flujo de trabajo</a>
+          <a href="#scenarios">Escenarios</a>
+          <a href="#avanzado">Avanzado</a>
+          <a href="practica.html">Practicar</a>
+        </nav>
       </div>
     </div>
   </nav>
 
+  <!-- HEADER -->
   <header id="introduccion">
     <div class="container">
       <h1>GIT</h1>
       <p class="subtitle">Sistema de control de versiones distribuido</p>
     </div>
+
   </header>
 
-  <main class="container">
-
+  <!-- MAIN -->
+  <main id="main" class="container" tabindex="-1">
     <!-- Introducción -->
     <section>
       <h2>INTRODUCCIÓN</h2>
       <p>
-        Git es un sistema de control de versiones distribuido que permite rastrear cambios 
-        en archivos y coordinar el trabajo entre múltiples personas. Creado por Linus Torvalds 
+        Git es un sistema de control de versiones distribuido que permite rastrear cambios
+        en archivos y coordinar el trabajo entre múltiples personas. Creado por Linus Torvalds
         en 2005, se ha convertido en el estándar de la industria.
       </p>
 
@@ -96,7 +159,7 @@
         </div>
         <div class="grid-item">
           <h4>WINDOWS</h4>
-          <p>Descargar desde git-scm.com</p>
+          <p>Descargar desde <a href="https://git-scm.com" rel="noopener">git-scm.com</a></p>
         </div>
       </div>
     </section>
@@ -107,7 +170,7 @@
 
       <h3>REPOSITORIO</h3>
       <p>
-        Directorio que contiene tu proyecto y todo su historial de cambios. 
+        Directorio que contiene tu proyecto y todo su historial de cambios.
         Puede ser local (en tu máquina) o remoto (GitHub, GitLab).
       </p>
       <div class="terminal">
@@ -118,7 +181,7 @@
 
       <h3>COMMIT</h3>
       <p>
-        Instantánea del proyecto en un momento específico. Cada commit tiene un hash único 
+        Instantánea del proyecto en un momento específico. Cada commit tiene un hash único
         y un mensaje descriptivo.
       </p>
       <div class="terminal">
@@ -130,7 +193,7 @@
 
       <h3>BRANCH (RAMA)</h3>
       <p>
-        Línea de desarrollo independiente. Permite trabajar en funcionalidades sin afectar 
+        Línea de desarrollo independiente. Permite trabajar en funcionalidades sin afectar
         la rama principal.
       </p>
       <div class="terminal">
@@ -144,37 +207,39 @@
         Área intermedia donde preparas los cambios antes de hacer commit. También llamado "Index".
       </p>
 
-      <table>
-        <thead>
-          <tr>
-            <th>ESTADO</th>
-            <th>DESCRIPCIÓN</th>
-            <th>COMANDO</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Untracked</td>
-            <td>Archivo nuevo, Git no lo rastrea</td>
-            <td><code>git add archivo</code></td>
-          </tr>
-          <tr>
-            <td>Modified</td>
-            <td>Archivo modificado, no en staging</td>
-            <td><code>git add archivo</code></td>
-          </tr>
-          <tr>
-            <td>Staged</td>
-            <td>Archivo listo para commit</td>
-            <td><code>git commit</code></td>
-          </tr>
-          <tr>
-            <td>Committed</td>
-            <td>Guardado en el historial</td>
-            <td><code>git push</code></td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ESTADO</th>
+              <th>DESCRIPCIÓN</th>
+              <th>COMANDO</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Untracked</td>
+              <td>Archivo nuevo, Git no lo rastrea</td>
+              <td><code>git add archivo</code></td>
+            </tr>
+            <tr>
+              <td>Modified</td>
+              <td>Archivo modificado, no en staging</td>
+              <td><code>git add archivo</code></td>
+            </tr>
+            <tr>
+              <td>Staged</td>
+              <td>Archivo listo para commit</td>
+              <td><code>git commit</code></td>
+            </tr>
+            <tr>
+              <td>Committed</td>
+              <td>Guardado en el historial</td>
+              <td><code>git push</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <!-- Workflow -->
@@ -218,7 +283,6 @@
       </div>
 
       <h3>COMANDOS ESENCIALES DIARIOS</h3>
-      
       <div class="terminal">
         <span class="command-comment"># Ver estado actual</span>
         <span class="command">git status</span>
@@ -392,11 +456,11 @@
         <span class="command">git rebase -i HEAD~3</span>
         <br>
         <span class="command-comment"># Opciones disponibles:</span>
-        <span class="command-comment"># pick   = usar commit</span>
+        <span class="command-comment"># pick = usar commit</span>
         <span class="command-comment"># reword = usar commit pero editar mensaje</span>
-        <span class="command-comment"># edit   = usar commit y pausar para modificar</span>
+        <span class="command-comment"># edit = usar commit y pausar para modificar</span>
         <span class="command-comment"># squash = combinar con commit anterior</span>
-        <span class="command-comment"># drop   = eliminar commit</span>
+        <span class="command-comment"># drop = eliminar commit</span>
       </div>
 
       <h3>BISECT</h3>
@@ -459,102 +523,14 @@
         <span class="command">git config --global pull.rebase true</span>
       </div>
     </section>
-
-    <!-- .gitignore -->
-    <section>
-      <h2>ARCHIVO .GITIGNORE</h2>
-      <p>
-        Define qué archivos y directorios Git debe ignorar.
-      </p>
-
-      <div class="example">
-        <div class="example-title">Ejemplo de .gitignore para Node.js</div>
-        <div class="terminal">
-          <span class="command"># Dependencies</span>
-          <span class="command">node_modules/</span>
-          <span class="command">npm-debug.log*</span>
-          <br>
-          <span class="command"># Environment variables</span>
-          <span class="command">.env</span>
-          <span class="command">.env.local</span>
-          <br>
-          <span class="command"># Build output</span>
-          <span class="command">dist/</span>
-          <span class="command">build/</span>
-          <br>
-          <span class="command"># IDE</span>
-          <span class="command">.vscode/</span>
-          <span class="command">.idea/</span>
-          <span class="command">*.swp</span>
-          <br>
-          <span class="command"># OS</span>
-          <span class="command">.DS_Store</span>
-          <span class="command">Thumbs.db</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Convenciones -->
-    <section>
-      <h2>CONVENCIONES DE COMMITS</h2>
-      
-      <h3>CONVENTIONAL COMMITS</h3>
-      <p>Formato estándar para mensajes de commit.</p>
-
-      <table>
-        <thead>
-          <tr>
-            <th>TIPO</th>
-            <th>DESCRIPCIÓN</th>
-            <th>EJEMPLO</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>feat</td>
-            <td>Nueva funcionalidad</td>
-            <td>feat: agregar login con OAuth</td>
-          </tr>
-          <tr>
-            <td>fix</td>
-            <td>Corrección de bug</td>
-            <td>fix: corregir validación de email</td>
-          </tr>
-          <tr>
-            <td>docs</td>
-            <td>Documentación</td>
-            <td>docs: actualizar README</td>
-          </tr>
-          <tr>
-            <td>style</td>
-            <td>Formato, punto y coma</td>
-            <td>style: formatear con prettier</td>
-          </tr>
-          <tr>
-            <td>refactor</td>
-            <td>Refactorización</td>
-            <td>refactor: simplificar auth logic</td>
-          </tr>
-          <tr>
-            <td>test</td>
-            <td>Agregar tests</td>
-            <td>test: agregar tests para API</td>
-          </tr>
-          <tr>
-            <td>chore</td>
-            <td>Tareas de mantenimiento</td>
-            <td>chore: actualizar dependencias</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
   </main>
 
   <footer>
     <p>GIT — CONTROL DE VERSIONES</p>
-    <p>v2.47.1 — Documentación completa en git-scm.com</p>
+    <p>v2.47.1 — Documentación completa en <a href="https://git-scm.com" rel="noopener">git-scm.com</a></p>
   </footer>
 
+  <script src="js/index.js"></script>
 </body>
+
 </html>

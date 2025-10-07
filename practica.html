@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="es" data-theme="auto">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Git — Práctica Interactiva</title>
+    <meta name="description"
+      content="Guía clara y práctica de Git: conceptos, workflow, escenarios comunes, comandos avanzados, .gitignore y Conventional Commits. Ideal para empezar y para repasar." />
+    <meta name="keywords"
+      content="Git, control de versiones, branches, commits, merge, rebase, cherry-pick, reflog, gitignore, conventional commits" />
+    <meta name="robots" content="index, follow" />
+
+    <meta name="author" content="Paul AS" />
+    <meta name="application-name" content="PAUL_AS / GIT" />
+    <meta name="generator" content="Handcrafted" />
+    <meta name="color-scheme" content="light dark" />
+
+    <meta name="theme-color" media="(prefers-color-scheme: light)"
+      content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)"
+      content="#0a0a0a" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="PAUL_AS / GIT" />
+    <meta property="og:title"
+      content="Git — Control de Versiones: guía completa y comandos" />
+    <meta property="og:description"
+      content="Todo lo esencial de Git con ejemplos de terminal: flujo de trabajo, solución de conflictos, stash, rebase, cherry-pick y más." />
+    <meta property="og:image:alt"
+      content="Portada guía de Git con terminal y ramas" />
+    <meta property="og:locale" content="es_PE" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title"
+      content="Git — Control de Versiones: guía completa y comandos" />
+    <meta name="twitter:description"
+      content="Conceptos, workflow, escenarios y comandos avanzados de Git con ejemplos." />
+
+    <link rel="icon" type="image/png" href="img/logoGit.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="img/logoGit.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="msapplication-TileColor" content="#0a0a0a" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@400;600;700&display=swap"
+      rel="stylesheet">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet">
+
+    <link rel="stylesheet" href="css/practica.css">
+    <link rel="stylesheet" href="css/index.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#introduccion">Saltar al contenido</a>
+    <!-- NAV -->
+    <nav aria-label="Principal">
+       <div class="container nav-inner">
+      <a href="#introduccion" class="brand" aria-label="Ir al inicio">
+        <span class="brand-badge" aria-hidden="true"><i class="fas fa-code"></i>
+        </span>
+        <span>PAUL_AS / GIT</span>
+      </a>
+      <div class="nav-links" role="navigation" aria-label="Secciones">
+          <a href="index.html">Inicio</a>
+          <a href="#terminal">Terminal</a>
+          <a href="#commits">Generador</a>
+          <a href="#quiz">Quiz</a>
+          <a href="#buscador">Buscador</a>
+          <a href="consola.html"><i class="fas fa-code"></i> Consola</a>
+        </div>
+        <div class="nav-actions">
+        <button id="themeBtn" class="icon-btn" type="button" aria-pressed="false" aria-label="Cambiar tema">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+          <span id="themeLabel">Tema</span>
+        </button>
+        <button id="menuBtn" class="icon-btn hamburger" type="button" aria-label="Abrir menú" aria-haspopup="true"
+          aria-expanded="false" aria-controls="mobilePanel">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+          <span class="sr-only">Menú</span>
+        </button>
+      </div>
+      </div>
+      <!-- Mobile overlay -->
+      <div id="mobilePanel" class="mobile-panel" hidden>
+        <div class="mobile-card" role="dialog" aria-label="Menú de navegación">
+          <div class="mobile-row">
+            <div class="brand" style="font-size: .95rem;">
+              <span class="brand-badge" aria-hidden="true"><i class="fas fa-code"></i>
+        </span>
+              <span>PAUL_AS / GIT</span>
+            </div>
+            <button id="closeMenu" class="icon-btn" type="button"
+              aria-label="Cerrar menú">
+              <svg class="icon" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round"
+                aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+          </div>
+          <nav class="mobile-links" aria-label="Secciones móviles">
+            <a href="index.html">Inicio</a>
+          <a href="#terminal">Terminal</a>
+          <a href="#commits">Generador</a>
+          <a href="#quiz">Quiz</a>
+          <a href="#buscador">Buscador</a>
+          <a href="consola.html"><i class="fas fa-code"></i> Consola</a>
+          </nav>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HEADER -->
+    <header>
+      <div class="container">
+        <h1>Práctica Interactiva</h1>
+        <p class="subtitle">Pon a prueba tus comandos y mensajes de commit</p>
+      </div>
+    </header>
+
+    <main class="container">
+      <!-- Terminal interactiva -->
+      <section id="terminal">
+        <h2>Terminal Interactiva</h2>
+        <div class="row">
+          <div class="col-12">
+            <div class="terminal" aria-live="polite">
+              <div class="term-output" id="termOutput">Escribe un comando de
+                Git. Ejemplos:
+                - git status
+                - git init
+                - git add archivo.txt
+                - git commit -m "feat: mensaje"
+                - git branch
+                - git checkout -b feature/x
+                - git log
+                Escribe "help" para ver todos los comandos soportados o "reset"
+                para reiniciar el repo simulado.
+              </div>
+              <div class="term-input">
+                <input id="termInput" type="text"
+                  placeholder="$ tu comando aquí..." autocomplete="off" />
+                <button id="termRun" class="btn">Ejecutar</button>
+                <button id="termReset" class="btn"
+                  title="Reiniciar">Reset</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="muted" style="margin-top:.5rem">Simulación simple en memoria:
+          no ejecuta Git real, pero replica salidas típicas.</p>
+      </section>
+
+      <!-- Generador de Conventional Commits -->
+      <section id="commits">
+        <h2>Generador de Commits (Conventional)</h2>
+        <div class="row">
+          <div class="col-6">
+            <div class="card stack">
+              <h3>Construye tu mensaje</h3>
+              <label>Tipo</label>
+              <select id="ccType">
+                <option value="feat">feat</option>
+                <option value="fix">fix</option>
+                <option value="docs">docs</option>
+                <option value="style">style</option>
+                <option value="refactor">refactor</option>
+                <option value="test">test</option>
+                <option value="chore">chore</option>
+              </select>
+              <label>Scope (opcional)</label>
+              <input id="ccScope" placeholder="auth, ui, api..." />
+              <label>Descripción corta</label>
+              <input id="ccSubject"
+                placeholder="agregar autenticación con OAuth" />
+              <label>Body (opcional)</label>
+              <textarea id="ccBody" rows="4"
+                placeholder="Detalles adicionales del cambio"></textarea>
+              <div>
+                <button id="ccBuild" class="btn">Generar</button>
+                <button id="ccCopy" class="btn">Copiar</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="card stack">
+              <h3>Preview</h3>
+              <div class="terminal" style="min-height:140px">
+                <div id="ccPreview" class="term-output">git commit -m
+                  "feat: ejemplo de mensaje"</div>
+              </div>
+              <span class="pill">Regla</span>
+              <p class="muted">Usa <strong>tipo(escopo): asunto</strong>. Máx.
+                ~72 caracteres en el asunto. El body puede ir en otro
+                párrafo.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quiz -->
+      <section id="quiz">
+        <h2>Quiz Rápido</h2>
+        <div class="card stack">
+          <div id="quizBox" class="stack"></div>
+          <div style="display:flex;gap:.5rem"><button id="quizCheck"
+              class="btn">Ver resultados</button><button id="quizReset"
+              class="btn">Reiniciar</button></div>
+          <p id="quizResult" class="muted"></p>
+        </div>
+      </section>
+
+      <!-- Buscador -->
+      <section id="buscador">
+        <h2>Buscador de Comandos</h2>
+        <div class="card stack">
+          <input id="filter"
+            placeholder="Filtra por comando o descripción..." />
+          <ul id="cmdList" class="stack" style="list-style:none"></ul>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>PAUL_AS • Git — Práctica Interactiva</p>
+    </footer>
+
+    <script src="js/index.js"></script>
+    <script src="js/practica.js"></script>
+  </body>
+</html>

@@ -1,118 +1,317 @@
-  * {
+    /* === Reset + base === */
+    * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     :root {
+      /* Light (default) */
+      --bg: #ffffff;
+      --bg-secondary: #f6f7f9;
+      --text: #0b1324;
+      --text-dim: #4b5563;
+      --accent: #087a3c;
+      /* azul agradable para light */
+      --border: #e5e7eb;
+      --code-bg: #0f172a;
+      /* terminal oscura en ambos temas */
+      --shadow: 0 2px 24px rgba(2, 6, 23, .06);
+      --brand-font: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      --nav-font: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      --brand-size: 1.0rem;
+      /* Marca (PAUL_AS / GIT) */
+      --brand-weight: 700;
+      /* 700 | 800 */
+
+      --nav-size: 0.92rem;
+      /* Links del navbar */
+      --nav-weight: 500;
+      /* 500 | 600 | 700 */
+      --nav-tracking: 0.10em;
+      /* espaciado entre letras */
+    }
+
+    /* Dark theme vars */
+    [data-theme="dark"] {
       --bg: #0a0a0a;
-      --bg-secondary: #1a1a1a;
-      --text: #e0e0e0;
-      --text-dim: #888;
+      --bg-secondary: #121212;
+      --text: #e5e7eb;
+      --text-dim: #9ca3af;
       --accent: #00ff88;
-      --border: #333;
-      --code-bg: #0f0f0f;
+      /* tu verde original en dark */
+      --border: #262626;
+      --code-bg: #0b0f19;
+      --shadow: 0 4px 32px rgba(0, 0, 0, .35);
     }
 
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Courier New', monospace;
-      line-height: 1.8;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      line-height: 1.75;
       overflow-x: hidden;
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 1180px;
       margin: 0 auto;
-      padding: 0 2rem;
+      padding: 0 1.25rem;
     }
 
-    /* Header */
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 10px;
+    }
+
+    /* === Skip link === */
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: auto;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    .skip-link:focus {
+      left: 1rem;
+      top: 1rem;
+      width: auto;
+      height: auto;
+      padding: .5rem .75rem;
+      background: var(--accent);
+      color: #000;
+      border-radius: .5rem;
+      z-index: 2000;
+    }
+
+    /* === Nav === */
+    nav {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      backdrop-filter: saturate(140%) blur(10px);
+      background: color-mix(in oklab, var(--bg) 80%, transparent);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: .85rem 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      font-family: var(--brand-font);
+      font-size: var(--brand-size);
+      font-weight: var(--brand-weight);
+      letter-spacing: .08em;
+      /* puedes dejarlo fijo o crear --brand-tracking si quieres */
+    }
+
+
+    .brand-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--accent);
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: .25rem;
+    }
+
+    /* Enlaces del navbar (desktop) */
+    .nav-links a {
+      font-family: var(--nav-font);
+      font-size: var(--nav-size);
+      font-weight: var(--nav-weight);
+      letter-spacing: var(--nav-tracking);
+      color: var(--text-dim);
+      padding: .6rem .8rem;
+      border-radius: .6rem;
+      border: 1px solid transparent;
+    }
+.nav-links a:focus-visible {
+  outline: 2px solid var(--border);   /* gris suave en vez de verde */
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+    /* Hover/active ya lo tienes, se heredan los tamaños */
+    .nav-links a:hover {
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .nav-links a.active {
+      color: var(--text);
+      border-color: var(--accent);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    .icon-btn {
+      border: 1px solid var(--border);
+      background: var(--bg);
+      padding: .5rem .7rem;
+      border-radius: .6rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    .icon-btn:hover {
+      box-shadow: var(--shadow);
+    }
+
+    .icon {
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+    }
+
+    /* Mobile menu (overlay) */
+    .mobile-panel {
+      position: fixed;
+      inset: 0;
+      background: color-mix(in oklab, var(--bg) 95%, transparent);
+      backdrop-filter: blur(10px);
+      display: none;
+      z-index: 999;
+    }
+
+    .mobile-panel.open {
+      display: block;
+    }
+
+    .mobile-card {
+      position: absolute;
+      top: .75rem;
+      left: .75rem;
+      right: .75rem;
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      background: var(--bg);
+      box-shadow: var(--shadow);
+      padding: .75rem;
+    }
+
+    .mobile-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mobile-links {
+      display: grid;
+      gap: .25rem;
+      padding: .5rem;
+    }
+
+    .mobile-links a {
+      font-family: var(--nav-font);
+      font-size: calc(var(--nav-size) + 0.02rem);
+      font-weight: var(--nav-weight);
+      letter-spacing: var(--nav-tracking);
+    }
+
+    .mobile-links a:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    /* === Header === */
     header {
-      padding: 8rem 0 4rem;
+      padding: 6.5rem 0 3rem;
       text-align: center;
       position: relative;
     }
 
     h1 {
-      font-size: 4rem;
-      font-weight: 400;
-      letter-spacing: 0.5rem;
-      margin-bottom: 1rem;
-      color: var(--text);
+      font-size: clamp(2.25rem, 3.5vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: .04em;
+      margin-bottom: .5rem;
     }
 
     .subtitle {
-    margin-left: 150px;
       color: var(--text-dim);
-      letter-spacing: 0.3rem;
+      letter-spacing: .25em;
       text-transform: uppercase;
+      font-size: .9rem;
+      display: block;
+      margin: 0 auto;
+      text-align: center;
+      max-width: 100%;
+      margin-top: 0.5rem;
     }
 
-    /* Navigation */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: rgba(10, 10, 10, 0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border);
-      z-index: 1000;
-      padding: 1rem 0;
-    }
-
-    nav .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    nav a {
-      color: var(--text-dim);
-      text-decoration: none;
-      font-size: 0.85rem;
-      letter-spacing: 0.1rem;
-      transition: color 0.3s;
-      margin: 0 1rem;
-    }
-
-    nav a:hover {
-      color: var(--accent);
-    }
-
-    section {
-      margin: 6rem 0;
+    /* === Sections === */
+    main section {
+      margin: 4rem 0;
       padding: 2rem 0;
       border-top: 1px solid var(--border);
     }
 
     h2 {
-      font-size: 2rem;
-      font-weight: 400;
-      letter-spacing: 0.3rem;
-      margin-bottom: 3rem;
-      color: var(--text);
+      font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+      font-weight: 800;
+      letter-spacing: .12em;
+      margin-bottom: 1.5rem;
       position: relative;
-      padding-bottom: 1rem;
+      padding-bottom: .9rem;
     }
 
     h2::after {
-      content: '';
+      content: "";
       position: absolute;
       bottom: 0;
       left: 0;
-      width: 60px;
-      height: 2px;
+      width: 64px;
+      height: 3px;
       background: var(--accent);
+      border-radius: 999px;
     }
 
     h3 {
-      font-size: 1.2rem;
-      font-weight: 400;
-      letter-spacing: 0.2rem;
-      margin: 2rem 0 1rem;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      margin: 1.75rem 0 .75rem;
       color: var(--accent);
     }
 
@@ -122,13 +321,16 @@
       max-width: 800px;
     }
 
+    /* === Terminal blocks === */
     .terminal {
       background: var(--code-bg);
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 1.5rem;
-      margin: 2rem 0;
-      font-size: 0.9rem;
+      border-radius: 10px;
+      padding: 1.25rem;
+      margin: 1.25rem 0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: .9rem;
+      color: #e5e7eb;
       position: relative;
       overflow-x: auto;
     }
@@ -140,163 +342,219 @@
 
     .terminal-header {
       display: flex;
-      gap: 0.5rem;
+      gap: .5rem;
       margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--border);
+      padding-bottom: .75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
     }
 
     .terminal-dot {
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background: #444;
+      background: #3f3f46;
     }
 
     .command {
-      color: var(--text);
+      color: #e5e7eb;
       display: block;
-      margin: 0.5rem 0;
+      margin: .4rem 0;
     }
 
     .command-comment {
-      color: var(--text-dim);
+      color: #9ca3af;
       font-style: italic;
     }
 
     .command-output {
-      color: var(--accent);
-      margin-left: 1rem;
+      color: #86efac;
+      margin-left: .5rem;
     }
 
+    /* === Cards / grids === */
     .example {
       background: var(--bg-secondary);
       border-left: 3px solid var(--accent);
-      padding: 2rem;
-      margin: 2rem 0;
+      padding: 1.25rem;
+      margin: 1.25rem 0;
+      border-radius: .75rem;
+      box-shadow: var(--shadow);
     }
 
     .example-title {
       color: var(--accent);
-      font-size: 0.85rem;
-      letter-spacing: 0.2rem;
+      font-size: .8rem;
+      letter-spacing: .18em;
       text-transform: uppercase;
-      margin-bottom: 1rem;
+      margin-bottom: .75rem;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin: 2rem 0;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 600px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     .grid-item {
       background: var(--bg-secondary);
       border: 1px solid var(--border);
-      padding: 2rem;
-      transition: border-color 0.3s;
+      padding: 1.25rem;
+      border-radius: .85rem;
+      transition: border-color .25s, transform .25s;
     }
 
     .grid-item:hover {
       border-color: var(--accent);
+      transform: translateY(-2px);
     }
 
     .grid-item h4 {
       color: var(--accent);
-      font-size: 1rem;
-      font-weight: 400;
-      letter-spacing: 0.15rem;
-      margin-bottom: 1rem;
+      font-size: .95rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      margin-bottom: .75rem;
     }
 
-    ul, ol {
-      margin: 1rem 0 1rem 2rem;
+    /* === Lists / code === */
+    ul,
+    ol {
+      margin: .75rem 0 .75rem 1.25rem;
       color: var(--text-dim);
     }
 
     li {
-      margin: 0.5rem 0;
+      margin: .4rem 0;
     }
 
     code {
-      background: var(--code-bg);
-      padding: 0.2rem 0.5rem;
+      background: var(--bg-secondary);
+      padding: .15rem .4rem;
       border: 1px solid var(--border);
-      border-radius: 2px;
-      color: var(--accent);
-      font-size: 0.85rem;
+      border-radius: .35rem;
+      color: var(--text);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: .85rem;
+    }
+
+    /* === Tables (responsive) === */
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: .75rem;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 2rem 0;
     }
 
-    th, td {
-      padding: 1rem;
+    th,
+    td {
+      padding: .9rem 1rem;
       text-align: left;
-      border: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
     }
 
     th {
       background: var(--bg-secondary);
       color: var(--accent);
-      font-weight: 400;
-      letter-spacing: 0.1rem;
+      font-weight: 700;
+      letter-spacing: .08em;
     }
 
     td {
       color: var(--text-dim);
     }
 
+    /* === Scenarios === */
     .scenario {
-      margin: 3rem 0;
-      padding: 2rem;
+      margin: 1.5rem 0;
+      padding: 1.25rem;
       border: 1px solid var(--border);
+      border-radius: .85rem;
     }
 
     .scenario-number {
       color: var(--accent);
-      font-size: 2rem;
-      margin-bottom: 1rem;
+      font-size: 1.25rem;
+      margin-bottom: .75rem;
+      font-weight: 800;
     }
 
+    /* === Footer === */
     footer {
-      margin-top: 8rem;
-      padding: 3rem 0;
+      margin-top: 4rem;
+      padding: 2.5rem 0;
       border-top: 1px solid var(--border);
       text-align: center;
       color: var(--text-dim);
-      font-size: 0.85rem;
+      font-size: .9rem;
     }
 
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2.5rem;
-        letter-spacing: 0.3rem;
+    /* === Responsive nav === */
+    @media (max-width: 860px) {
+      .nav-links {
+        display: none;
       }
 
-      .container {
-        padding: 0 1rem;
-      }
-
-      nav a {
-        margin: 0 0.5rem;
-        font-size: 0.75rem;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
+      .hamburger {
+        display: inline-flex;
       }
     }
 
-    html {
-      scroll-behavior: smooth;
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        scroll-behavior: auto !important;
+      }
     }
 
-    ::selection {
-      background: var(--accent);
-      color: var(--bg);
+    /* === Overrides solicitados: botones con texto blanco === */
+    /* Botón de tema en la barra */
+    #themeBtn {
+      color: var(--text);
+      background: var(--bg-secondary);
+      border-color: var(--border);
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
     }
+
+    #themeBtn:hover {
+      border-color: var(--accent);
+      box-shadow: var(--shadow);
+    }
+
+    /* Botón Copiar dentro de bloques .terminal */
+    .terminal .icon-btn {
+      color: #fff;
+      background: rgba(255, 255, 255, .1);
+      border-color: rgba(255, 255, 255, .25);
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+
+    .terminal .icon-btn:hover {
+      background: rgba(255, 255, 255, .2);
+      border-color: var(--accent);
+    }
+
+    /* Asegurar que el ícono siga el color del texto */
+    .icon-btn .icon {
+      stroke: currentColor;
+    }
+
+    

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es" data-theme="auto">
+ <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Práctica de Git — Terminal Interactiva</title>
+    <meta name="description"
+      content="Guía clara y práctica de Git: conceptos, workflow, escenarios comunes, comandos avanzados, .gitignore y Conventional Commits. Ideal para empezar y para repasar." />
+    <meta name="keywords"
+      content="Git, control de versiones, branches, commits, merge, rebase, cherry-pick, reflog, gitignore, conventional commits" />
+    <meta name="robots" content="index, follow" />
+
+    <meta name="author" content="Paul AS" />
+    <meta name="application-name" content="PAUL_AS / GIT" />
+    <meta name="generator" content="Handcrafted" />
+    <meta name="color-scheme" content="light dark" />
+
+    <meta name="theme-color" media="(prefers-color-scheme: light)"
+      content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)"
+      content="#0a0a0a" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="PAUL_AS / GIT" />
+    <meta property="og:title"
+      content="Git — Control de Versiones: guía completa y comandos" />
+    <meta property="og:description"
+      content="Todo lo esencial de Git con ejemplos de terminal: flujo de trabajo, solución de conflictos, stash, rebase, cherry-pick y más." />
+    <meta property="og:image:alt"
+      content="Portada guía de Git con terminal y ramas" />
+    <meta property="og:locale" content="es_PE" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title"
+      content="Git — Control de Versiones: guía completa y comandos" />
+    <meta name="twitter:description"
+      content="Conceptos, workflow, escenarios y comandos avanzados de Git con ejemplos." />
+
+    <link rel="icon" type="image/png" href="img/logoGit.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="img/logoGit.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="msapplication-TileColor" content="#0a0a0a" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@400;600;700&display=swap"
+      rel="stylesheet">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet">
+    <link rel="stylesheet" href="css/consola.css">
+  </head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <div class="brand">
+        <span class="badge"> <i class="fas fa-code"></i></span>
+        <span>PAUL_AS / GIT — Práctica</span>
+      </div>
+      <div class="actions">
+        <button id="themeBtn" class="icon-btn" type="button" aria-pressed="false" aria-label="Cambiar tema">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+          <span id="themeLabel">Tema</span>
+        </button>
+        <a class="btn" href="./index.html">← Volver a la guía</a>
+        <button id="resetBtn" class="btn" type="button" aria-label="Reiniciar entorno"><i class="fas fa-rotate-right"></i>  Reiniciar</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="grid">
+      <aside class="panel" aria-label="Retos">
+        <h2>Retos guiados</h2>
+        <div id="challenges"></div>
+        <p class="hint" style="margin-top:.75rem">Consejo: escribe <span class="kbd">help</span> para ver los comandos soportados.</p>
+      </aside>
+
+      <section class="terminal-wrap" aria-label="Terminal de práctica">
+        <div class="terminal-header">
+          <div class="lights"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+          <div>Simulador Git — sandbox</div>
+          <button id="copyBtn" class="btn">Copiar salida</button>
+        </div>
+        <div id="screen" class="screen" role="log" aria-live="polite"></div>
+        <div class="input-row">
+          <span class="prompt">$</span>
+          <input id="input" class="input" type="text" spellcheck="false" aria-label="Ingresar comando" autofocus />
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div id="toast" class="toast" role="status">Copiado</div>
+
+ <script src="js/index.js"></script>
+    <script src="js/consola.js"></script>
+</body>
+</html>
