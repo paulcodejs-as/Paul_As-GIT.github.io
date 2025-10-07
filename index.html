@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Git — Control de Versiones (Guía práctica y comandos esenciales)</title>
+  <meta name="description" content="Guía clara y práctica de Git: conceptos, workflow, escenarios comunes, comandos avanzados, .gitignore y Conventional Commits. Ideal para empezar y para repasar." />
+  <meta name="keywords" content="Git, control de versiones, branches, commits, merge, rebase, cherry-pick, reflog, gitignore, conventional commits" />
+  <meta name="robots" content="index, follow" />
+
+  <meta name="author" content="Paul AS" />
+  <meta name="application-name" content="PAUL_AS / GIT" />
+  <meta name="generator" content="Handcrafted" />
+  <meta name="color-scheme" content="light dark" />
+
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0a" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="PAUL_AS / GIT" />
+  <meta property="og:title" content="Git — Control de Versiones: guía completa y comandos" />
+  <meta property="og:description" content="Todo lo esencial de Git con ejemplos de terminal: flujo de trabajo, solución de conflictos, stash, rebase, cherry-pick y más." />
+  <meta property="og:image:alt" content="Portada guía de Git con terminal y ramas" />
+  <meta property="og:locale" content="es_PE" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Git — Control de Versiones: guía completa y comandos" />
+  <meta name="twitter:description" content="Conceptos, workflow, escenarios y comandos avanzados de Git con ejemplos." />
+
+  <link rel="icon" type="image/svg+xml" href="img/logoGit.png" />
+  <link rel="alternate icon" type="image/png" sizes="32x32" href="img/logoGit.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="img/logoGit.png" />
+  <meta name="apple-mobile-web-app-title" content="PAUL_AS / GIT" />
+
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="msapplication-TileColor" content="#0a0a0a" />
+  <link rel="stylesheet" href="css/index.css" />
+</head>
+
+<body>
+
+  <nav>
+    <div class="container">
+      <a href="#introduccion" ><span style="color: white !important;">PAUL_AS / GIT</span></a>
+      <div>
+        <a href="#conceptos">CONCEPTOS</a>
+        <a href="#workflow">FLUJO DE TRABAJO</a>
+        <a href="#scenarios">ESCENARIOS</a>
+        <a href="#avanzado">AVANZADO</a>
+      </div>
+    </div>
+  </nav>
+
+  <header id="introduccion">
+    <div class="container">
+      <h1>GIT</h1>
+      <p class="subtitle">Sistema de control de versiones distribuido</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Introducción -->
+    <section>
+      <h2>INTRODUCCIÓN</h2>
+      <p>
+        Git es un sistema de control de versiones distribuido que permite rastrear cambios 
+        en archivos y coordinar el trabajo entre múltiples personas. Creado por Linus Torvalds 
+        en 2005, se ha convertido en el estándar de la industria.
+      </p>
+
+      <div class="terminal">
+        <div class="terminal-header">
+          <span class="terminal-dot"></span>
+          <span class="terminal-dot"></span>
+          <span class="terminal-dot"></span>
+        </div>
+        <span class="command">git --version</span>
+        <span class="command-output">git version 2.47.1</span>
+      </div>
+
+      <h3>INSTALACIÓN</h3>
+      <div class="grid">
+        <div class="grid-item">
+          <h4>LINUX</h4>
+          <div class="terminal">
+            <span class="command">sudo apt install git</span>
+          </div>
+        </div>
+        <div class="grid-item">
+          <h4>MACOS</h4>
+          <div class="terminal">
+            <span class="command">brew install git</span>
+          </div>
+        </div>
+        <div class="grid-item">
+          <h4>WINDOWS</h4>
+          <p>Descargar desde git-scm.com</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Conceptos -->
+    <section id="conceptos">
+      <h2>CONCEPTOS FUNDAMENTALES</h2>
+
+      <h3>REPOSITORIO</h3>
+      <p>
+        Directorio que contiene tu proyecto y todo su historial de cambios. 
+        Puede ser local (en tu máquina) o remoto (GitHub, GitLab).
+      </p>
+      <div class="terminal">
+        <span class="command-comment"># Crear un nuevo repositorio</span>
+        <span class="command">git init</span>
+        <span class="command-output">Initialized empty Git repository in /project/.git/</span>
+      </div>
+
+      <h3>COMMIT</h3>
+      <p>
+        Instantánea del proyecto en un momento específico. Cada commit tiene un hash único 
+        y un mensaje descriptivo.
+      </p>
+      <div class="terminal">
+        <span class="command">git add .</span>
+        <span class="command">git commit -m "feat: implementar autenticación"</span>
+        <span class="command-output">[main a3f5e7b] feat: implementar autenticación</span>
+        <span class="command-output">3 files changed, 47 insertions(+)</span>
+      </div>
+
+      <h3>BRANCH (RAMA)</h3>
+      <p>
+        Línea de desarrollo independiente. Permite trabajar en funcionalidades sin afectar 
+        la rama principal.
+      </p>
+      <div class="terminal">
+        <span class="command">git branch feature/login</span>
+        <span class="command">git checkout feature/login</span>
+        <span class="command-output">Switched to branch 'feature/login'</span>
+      </div>
+
+      <h3>STAGING AREA</h3>
+      <p>
+        Área intermedia donde preparas los cambios antes de hacer commit. También llamado "Index".
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ESTADO</th>
+            <th>DESCRIPCIÓN</th>
+            <th>COMANDO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Untracked</td>
+            <td>Archivo nuevo, Git no lo rastrea</td>
+            <td><code>git add archivo</code></td>
+          </tr>
+          <tr>
+            <td>Modified</td>
+            <td>Archivo modificado, no en staging</td>
+            <td><code>git add archivo</code></td>
+          </tr>
+          <tr>
+            <td>Staged</td>
+            <td>Archivo listo para commit</td>
+            <td><code>git commit</code></td>
+          </tr>
+          <tr>
+            <td>Committed</td>
+            <td>Guardado en el historial</td>
+            <td><code>git push</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Workflow -->
+    <section id="workflow">
+      <h2>FLUJO DE TRABAJO BÁSICO</h2>
+
+      <div class="example">
+        <div class="example-title">Flujo de trabajo estándar</div>
+        <div class="terminal">
+          <span class="command-comment"># 1. Clonar repositorio</span>
+          <span class="command">git clone https://github.com/usuario/proyecto.git</span>
+          <span class="command">cd proyecto</span>
+          <br>
+          <span class="command-comment"># 2. Crear rama para nueva funcionalidad</span>
+          <span class="command">git checkout -b feature/nueva-funcionalidad</span>
+          <br>
+          <span class="command-comment"># 3. Hacer cambios en el código</span>
+          <span class="command-comment"># (editar archivos...)</span>
+          <br>
+          <span class="command-comment"># 4. Ver estado</span>
+          <span class="command">git status</span>
+          <br>
+          <span class="command-comment"># 5. Agregar al staging</span>
+          <span class="command">git add src/auth.js</span>
+          <span class="command">git add tests/auth.test.js</span>
+          <br>
+          <span class="command-comment"># 6. Hacer commit</span>
+          <span class="command">git commit -m "feat: agregar autenticación JWT"</span>
+          <br>
+          <span class="command-comment"># 7. Actualizar desde remoto</span>
+          <span class="command">git pull origin main</span>
+          <br>
+          <span class="command-comment"># 8. Subir cambios</span>
+          <span class="command">git push origin feature/nueva-funcionalidad</span>
+          <br>
+          <span class="command-comment"># 9. Crear Pull Request en GitHub/GitLab</span>
+          <span class="command-comment"># 10. Después del merge, actualizar main</span>
+          <span class="command">git checkout main</span>
+          <span class="command">git pull origin main</span>
+        </div>
+      </div>
+
+      <h3>COMANDOS ESENCIALES DIARIOS</h3>
+      
+      <div class="terminal">
+        <span class="command-comment"># Ver estado actual</span>
+        <span class="command">git status</span>
+        <br>
+        <span class="command-comment"># Ver diferencias</span>
+        <span class="command">git diff</span>
+        <br>
+        <span class="command-comment"># Ver historial</span>
+        <span class="command">git log --oneline --graph</span>
+        <br>
+        <span class="command-comment"># Ver ramas</span>
+        <span class="command">git branch -a</span>
+        <br>
+        <span class="command-comment"># Cambiar de rama</span>
+        <span class="command">git checkout nombre-rama</span>
+        <br>
+        <span class="command-comment"># Crear y cambiar a nueva rama</span>
+        <span class="command">git checkout -b nueva-rama</span>
+      </div>
+    </section>
+
+    <!-- Escenarios -->
+    <section id="scenarios">
+      <h2>ESCENARIOS PRÁCTICOS</h2>
+
+      <div class="scenario">
+        <div class="scenario-number">01</div>
+        <h3>COMETISTE UN ERROR EN EL ÚLTIMO COMMIT</h3>
+        <p>Olvidaste agregar un archivo o el mensaje está mal.</p>
+        <div class="terminal">
+          <span class="command-comment"># Agregar archivos olvidados</span>
+          <span class="command">git add archivo-olvidado.js</span>
+          <br>
+          <span class="command-comment"># Modificar el último commit</span>
+          <span class="command">git commit --amend -m "feat: mensaje corregido"</span>
+          <br>
+          <span class="command-comment"># Si ya hiciste push</span>
+          <span class="command">git push --force-with-lease origin rama</span>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="scenario-number">02</div>
+        <h3>NECESITAS CAMBIAR DE RAMA PERO TIENES CAMBIOS SIN COMMIT</h3>
+        <p>Usar stash para guardar temporalmente.</p>
+        <div class="terminal">
+          <span class="command-comment"># Guardar cambios temporalmente</span>
+          <span class="command">git stash save "trabajo en progreso"</span>
+          <br>
+          <span class="command-comment"># Cambiar de rama</span>
+          <span class="command">git checkout otra-rama</span>
+          <br>
+          <span class="command-comment"># Volver y recuperar cambios</span>
+          <span class="command">git checkout rama-original</span>
+          <span class="command">git stash pop</span>
+          <br>
+          <span class="command-comment"># Ver lista de stashes</span>
+          <span class="command">git stash list</span>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="scenario-number">03</div>
+        <h3>CONFLICTO AL HACER MERGE</h3>
+        <p>Dos ramas modificaron la misma parte del código.</p>
+        <div class="terminal">
+          <span class="command">git merge feature/nueva-rama</span>
+          <span class="command-output">Auto-merging src/app.js</span>
+          <span class="command-output">CONFLICT (content): Merge conflict in src/app.js</span>
+          <br>
+          <span class="command-comment"># 1. Abrir archivo y resolver conflictos manualmente</span>
+          <span class="command-comment"># 2. Agregar archivos resueltos</span>
+          <span class="command">git add src/app.js</span>
+          <br>
+          <span class="command-comment"># 3. Completar el merge</span>
+          <span class="command">git commit -m "merge: resolver conflictos con feature/nueva-rama"</span>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="scenario-number">04</div>
+        <h3>NECESITAS DESHACER UN COMMIT</h3>
+        <p>Diferentes opciones según lo que necesites.</p>
+        <div class="terminal">
+          <span class="command-comment"># Deshacer último commit, mantener cambios en staging</span>
+          <span class="command">git reset --soft HEAD~1</span>
+          <br>
+          <span class="command-comment"># Deshacer último commit, mantener cambios sin staging</span>
+          <span class="command">git reset HEAD~1</span>
+          <br>
+          <span class="command-comment"># Deshacer último commit, eliminar todos los cambios</span>
+          <span class="command">git reset --hard HEAD~1</span>
+          <br>
+          <span class="command-comment"># Revertir commit creando uno nuevo (seguro)</span>
+          <span class="command">git revert abc123</span>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="scenario-number">05</div>
+        <h3>ACTUALIZAR RAMA CON CAMBIOS DE MAIN</h3>
+        <p>Tu rama está desactualizada respecto a main.</p>
+        <div class="terminal">
+          <span class="command-comment"># Opción 1: Rebase (historial lineal)</span>
+          <span class="command">git checkout feature/mi-rama</span>
+          <span class="command">git fetch origin</span>
+          <span class="command">git rebase origin/main</span>
+          <br>
+          <span class="command-comment"># Opción 2: Merge (preserva historial)</span>
+          <span class="command">git checkout feature/mi-rama</span>
+          <span class="command">git merge origin/main</span>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="scenario-number">06</div>
+        <h3>VER QUÉ CAMBIÓ EN UN ARCHIVO</h3>
+        <p>Comparar versiones de un archivo.</p>
+        <div class="terminal">
+          <span class="command-comment"># Ver cambios no staged</span>
+          <span class="command">git diff archivo.js</span>
+          <br>
+          <span class="command-comment"># Ver cambios staged</span>
+          <span class="command">git diff --staged archivo.js</span>
+          <br>
+          <span class="command-comment"># Comparar con commit específico</span>
+          <span class="command">git diff abc123 archivo.js</span>
+          <br>
+          <span class="command-comment"># Ver quién modificó cada línea</span>
+          <span class="command">git blame archivo.js</span>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="scenario-number">07</div>
+        <h3>TRABAJO EN EQUIPO - SINCRONIZACIÓN</h3>
+        <p>Mantener tu copia actualizada con el equipo.</p>
+        <div class="terminal">
+          <span class="command-comment"># Cada mañana antes de trabajar</span>
+          <span class="command">git checkout main</span>
+          <span class="command">git pull origin main</span>
+          <span class="command">git checkout feature/mi-rama</span>
+          <span class="command">git rebase main</span>
+          <br>
+          <span class="command-comment"># Antes de hacer push</span>
+          <span class="command">git fetch origin</span>
+          <span class="command">git rebase origin/main</span>
+          <span class="command">git push origin feature/mi-rama</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Avanzado -->
+    <section id="avanzado">
+      <h2>COMANDOS AVANZADOS</h2>
+
+      <h3>CHERRY-PICK</h3>
+      <p>Aplicar commits específicos de una rama a otra.</p>
+      <div class="terminal">
+        <span class="command-comment"># Aplicar un commit específico</span>
+        <span class="command">git cherry-pick abc123</span>
+        <br>
+        <span class="command-comment"># Aplicar múltiples commits</span>
+        <span class="command">git cherry-pick abc123 def456 ghi789</span>
+      </div>
+
+      <h3>REBASE INTERACTIVO</h3>
+      <p>Reorganizar, editar o combinar commits.</p>
+      <div class="terminal">
+        <span class="command-comment"># Editar últimos 3 commits</span>
+        <span class="command">git rebase -i HEAD~3</span>
+        <br>
+        <span class="command-comment"># Opciones disponibles:</span>
+        <span class="command-comment"># pick   = usar commit</span>
+        <span class="command-comment"># reword = usar commit pero editar mensaje</span>
+        <span class="command-comment"># edit   = usar commit y pausar para modificar</span>
+        <span class="command-comment"># squash = combinar con commit anterior</span>
+        <span class="command-comment"># drop   = eliminar commit</span>
+      </div>
+
+      <h3>BISECT</h3>
+      <p>Encontrar el commit que introdujo un bug mediante búsqueda binaria.</p>
+      <div class="terminal">
+        <span class="command-comment"># Iniciar bisect</span>
+        <span class="command">git bisect start</span>
+        <span class="command">git bisect bad</span>
+        <span class="command">git bisect good abc123</span>
+        <br>
+        <span class="command-comment"># Probar y marcar</span>
+        <span class="command">git bisect good</span>
+        <span class="command-comment"># o</span>
+        <span class="command">git bisect bad</span>
+        <br>
+        <span class="command-comment"># Terminar</span>
+        <span class="command">git bisect reset</span>
+      </div>
+
+      <h3>REFLOG</h3>
+      <p>Recuperar commits "perdidos".</p>
+      <div class="terminal">
+        <span class="command-comment"># Ver historial de referencias</span>
+        <span class="command">git reflog</span>
+        <br>
+        <span class="command-comment"># Recuperar commit</span>
+        <span class="command">git checkout abc123</span>
+        <span class="command">git checkout -b rama-recuperada</span>
+      </div>
+
+      <h3>SUBMODULES</h3>
+      <p>Incluir repositorios dentro de repositorios.</p>
+      <div class="terminal">
+        <span class="command-comment"># Agregar submodule</span>
+        <span class="command">git submodule add https://github.com/user/lib.git lib</span>
+        <br>
+        <span class="command-comment"># Clonar proyecto con submodules</span>
+        <span class="command">git clone --recursive https://github.com/user/project.git</span>
+        <br>
+        <span class="command-comment"># Actualizar submodules</span>
+        <span class="command">git submodule update --remote</span>
+      </div>
+
+      <h3>CONFIGURACIÓN ÚTIL</h3>
+      <div class="terminal">
+        <span class="command-comment"># Alias personalizados</span>
+        <span class="command">git config --global alias.st status</span>
+        <span class="command">git config --global alias.co checkout</span>
+        <span class="command">git config --global alias.br branch</span>
+        <span class="command">git config --global alias.cm commit</span>
+        <span class="command">git config --global alias.lg "log --oneline --graph --all"</span>
+        <br>
+        <span class="command-comment"># Editor predeterminado</span>
+        <span class="command">git config --global core.editor "code --wait"</span>
+        <br>
+        <span class="command-comment"># Colores</span>
+        <span class="command">git config --global color.ui auto</span>
+        <br>
+        <span class="command-comment"># Configurar pull</span>
+        <span class="command">git config --global pull.rebase true</span>
+      </div>
+    </section>
+
+    <!-- .gitignore -->
+    <section>
+      <h2>ARCHIVO .GITIGNORE</h2>
+      <p>
+        Define qué archivos y directorios Git debe ignorar.
+      </p>
+
+      <div class="example">
+        <div class="example-title">Ejemplo de .gitignore para Node.js</div>
+        <div class="terminal">
+          <span class="command"># Dependencies</span>
+          <span class="command">node_modules/</span>
+          <span class="command">npm-debug.log*</span>
+          <br>
+          <span class="command"># Environment variables</span>
+          <span class="command">.env</span>
+          <span class="command">.env.local</span>
+          <br>
+          <span class="command"># Build output</span>
+          <span class="command">dist/</span>
+          <span class="command">build/</span>
+          <br>
+          <span class="command"># IDE</span>
+          <span class="command">.vscode/</span>
+          <span class="command">.idea/</span>
+          <span class="command">*.swp</span>
+          <br>
+          <span class="command"># OS</span>
+          <span class="command">.DS_Store</span>
+          <span class="command">Thumbs.db</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Convenciones -->
+    <section>
+      <h2>CONVENCIONES DE COMMITS</h2>
+      
+      <h3>CONVENTIONAL COMMITS</h3>
+      <p>Formato estándar para mensajes de commit.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>TIPO</th>
+            <th>DESCRIPCIÓN</th>
+            <th>EJEMPLO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>feat</td>
+            <td>Nueva funcionalidad</td>
+            <td>feat: agregar login con OAuth</td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>Corrección de bug</td>
+            <td>fix: corregir validación de email</td>
+          </tr>
+          <tr>
+            <td>docs</td>
+            <td>Documentación</td>
+            <td>docs: actualizar README</td>
+          </tr>
+          <tr>
+            <td>style</td>
+            <td>Formato, punto y coma</td>
+            <td>style: formatear con prettier</td>
+          </tr>
+          <tr>
+            <td>refactor</td>
+            <td>Refactorización</td>
+            <td>refactor: simplificar auth logic</td>
+          </tr>
+          <tr>
+            <td>test</td>
+            <td>Agregar tests</td>
+            <td>test: agregar tests para API</td>
+          </tr>
+          <tr>
+            <td>chore</td>
+            <td>Tareas de mantenimiento</td>
+            <td>chore: actualizar dependencias</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>GIT — CONTROL DE VERSIONES</p>
+    <p>v2.47.1 — Documentación completa en git-scm.com</p>
+  </footer>
+
+</body>
+</html>
