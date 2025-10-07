@@ -55,13 +55,14 @@
     <a class="skip-link" href="#introduccion">Saltar al contenido</a>
     <!-- NAV -->
     <nav aria-label="Principal">
-       <div class="container nav-inner">
-      <a href="#introduccion" class="brand" aria-label="Ir al inicio">
-        <span class="brand-badge" aria-hidden="true"><i class="fas fa-code"></i>
-        </span>
-        <span>PAUL_AS / GIT</span>
-      </a>
-      <div class="nav-links" role="navigation" aria-label="Secciones">
+      <div class="container nav-inner">
+        <a href="#introduccion" class="brand" aria-label="Ir al inicio">
+          <span class="brand-badge" aria-hidden="true"><i
+              class="fas fa-code"></i>
+          </span>
+          <span>PAUL_AS / GIT</span>
+        </a>
+        <div class="nav-links" role="navigation" aria-label="Secciones">
           <a href="index.html">Inicio</a>
           <a href="#terminal">Terminal</a>
           <a href="#commits">Generador</a>
@@ -70,32 +71,37 @@
           <a href="consola.html"><i class="fas fa-code"></i> Consola</a>
         </div>
         <div class="nav-actions">
-        <button id="themeBtn" class="icon-btn" type="button" aria-pressed="false" aria-label="Cambiar tema">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-          </svg>
-          <span id="themeLabel">Tema</span>
-        </button>
-        <button id="menuBtn" class="icon-btn hamburger" type="button" aria-label="Abrir menú" aria-haspopup="true"
-          aria-expanded="false" aria-controls="mobilePanel">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
-          <span class="sr-only">Menú</span>
-        </button>
-      </div>
+          <button id="themeBtn" class="icon-btn" type="button"
+            aria-pressed="false" aria-label="Cambiar tema">
+            <svg class="icon" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+            <span id="themeLabel">Tema</span>
+          </button>
+          <button id="menuBtn" class="icon-btn hamburger" type="button"
+            aria-label="Abrir menú" aria-haspopup="true"
+            aria-expanded="false" aria-controls="mobilePanel">
+            <svg class="icon" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+            <span class="sr-only">Menú</span>
+          </button>
+        </div>
       </div>
       <!-- Mobile overlay -->
       <div id="mobilePanel" class="mobile-panel" hidden>
         <div class="mobile-card" role="dialog" aria-label="Menú de navegación">
           <div class="mobile-row">
             <div class="brand" style="font-size: .95rem;">
-              <span class="brand-badge" aria-hidden="true"><i class="fas fa-code"></i>
-        </span>
+              <span class="brand-badge" aria-hidden="true"><i
+                  class="fas fa-code"></i>
+              </span>
               <span>PAUL_AS / GIT</span>
             </div>
             <button id="closeMenu" class="icon-btn" type="button"
@@ -111,11 +117,11 @@
           </div>
           <nav class="mobile-links" aria-label="Secciones móviles">
             <a href="index.html">Inicio</a>
-          <a href="#terminal">Terminal</a>
-          <a href="#commits">Generador</a>
-          <a href="#quiz">Quiz</a>
-          <a href="#buscador">Buscador</a>
-          <a href="consola.html"><i class="fas fa-code"></i> Consola</a>
+            <a href="#terminal">Terminal</a>
+            <a href="#commits">Generador</a>
+            <a href="#quiz">Quiz</a>
+            <a href="#buscador">Buscador</a>
+            <a href="consola.html"><i class="fas fa-code"></i> Consola</a>
           </nav>
         </div>
       </div>
@@ -123,7 +129,7 @@
 
     <!-- HEADER -->
     <header>
-      <div class="container">
+      <div class="container" id="introduccion">
         <h1>Práctica Interactiva</h1>
         <p class="subtitle">Pon a prueba tus comandos y mensajes de commit</p>
       </div>
@@ -164,7 +170,7 @@
 
       <!-- Generador de Conventional Commits -->
       <section id="commits">
-        <h2>Generador de Commits (Conventional)</h2>
+        <h2>Generador de Commits (Convencional)</h2>
         <div class="row">
           <div class="col-6">
             <div class="card stack">
@@ -233,7 +239,19 @@
     </main>
 
     <footer>
-      <p>PAUL_AS • Git — Práctica Interactiva</p>
+      <div class="container footer-inner">
+        <p>© 2025 <strong>PAUL_AS</strong> • PRÁCTICA INTERACTIVA</p>
+        <div class="footer-links">
+          <a href="https://github.com/paulcodejs-as" target="_blank"
+            aria-label="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/paulsalazar24" target="_blank"
+            aria-label="LinkedIn">
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
+      </div>
     </footer>
 
     <script src="js/index.js"></script>
